@@ -25,6 +25,7 @@ for question in train_data:
 print("Text:", len(train_texts), "Labels:", len(train_labels))
 num_labels = pd.Series(train_labels).nunique()
 print("Unique training labels:", num_labels)
+print(pd.Series(train_labels).unique())
 
 # Convert string labels to numerical labels
 label_map = {label: i for i, label in enumerate(set(train_labels))}
