@@ -108,6 +108,8 @@ print()
 print("Now running evaluation.")
 
 # Preparing the test data
+test_texts = []
+test_labels = []
 for question in test_data:
     test_texts.append(question['text'])
     test_labels.append(question['label'])
