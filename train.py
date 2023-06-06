@@ -4,7 +4,7 @@ from transformers import BertTokenizer, BertForSequenceClassification
 from torch.utils.data import TensorDataset, DataLoader
 
 # Check if GPU is available
-device = torch.device('cuda' if torch.cuda.is.available() else 'cpu')
+device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
 # Define the hyperparameters
 epochs = 5
