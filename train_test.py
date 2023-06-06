@@ -60,7 +60,7 @@ reverse_map = dict([(value, key) for key, value in label_map.items()])
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
 # Define the hyperparameters
-epochs = 30
+epochs = 3
 batch_size = 16
 learning_rate = 2e-5
 
@@ -192,7 +192,7 @@ for batch in test_dataloader:
         for i in range(len(targets)):
             output_file.write(f"Ground Truth: {test_labels[total_examples + i]}, Predicted: {reverse_map[predicted_labels[i].item()]}\n")
             gt_list.append(test_labels[total_examples + i])
-            preds_list.append(predicted_labels[i].item())
+            preds_list.append(reverse_map[predicted_labels[i].item()])
         
         # Count correct predictions
         correct_predictions += (predicted_labels == targets).sum().item()
