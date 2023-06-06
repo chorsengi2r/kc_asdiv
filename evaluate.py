@@ -65,6 +65,9 @@ model.eval()
 total_examples = 0
 correct_predictions = 0
 
+# Create output file for writing predictions
+output_file = open('path/to/output/file.txt', 'w')
+
 # Iterate over the test data
 for batch in test_dataloader:
     input_ids = batch[0].to(device)
@@ -79,11 +82,18 @@ for batch in test_dataloader:
 
         # Get predicted labels
         _, predicted_labels = torch.max(logits, dim=1)
+        
+        # Write ground truth labels and predictions to the output file
+        for i in range(len(targets)):
+            output_file.write(f"Ground Truth: {test_labels[total_examples + i]}, Predicted: {predicted_labels[i].item()}\n")
 
         # Count correct predictions
         correct_predictions += (predicted_labels == targets).sum().item()
 
     total_examples += targets.size(0)
+    
+# Close the output file
+output_file.close()
 
 # Calculate accuracy
 accuracy = correct_predictions / total_examples
