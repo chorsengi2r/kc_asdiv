@@ -38,7 +38,7 @@ model = BertForSequenceClassification.from_pretrained('bert-base-uncased', num_l
 model.to(device)
 
 # Load the trained model
-model.load_state_dict(torch.load('./kc_model/'))
+model.load_state_dict(torch.load('./kc_model'))
 
 # Tokenize the test texts
 encoded_test_inputs = tokenizer(test_texts, padding=True, truncation=True, return_tensors='pt')
