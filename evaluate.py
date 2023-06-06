@@ -24,6 +24,7 @@ for question in test_data:
     test_labels.append(question['label'])
 print("Text:", len(test_texts), "Labels:", len(test_labels))
 num_labels = pd.Series(test_labels).nunique()
+print("Unique test labels:", num_labels)
 
 # Convert string labels to numerical labels
 label_map = {label: i for i, label in enumerate(set(test_labels))}
