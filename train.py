@@ -3,21 +3,6 @@ import json
 from transformers import BertTokenizer, BertForSequenceClassification
 from torch.utils.data import TensorDataset, DataLoader
 
-# Check if GPU is available
-device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
-
-# Define the hyperparameters
-epochs = 5
-batch_size = 32
-learning_rate = 2e-5
-
-# Load the pre-trained tokenizer and model
-tokenizer = BertTokenizer.from_pretrained('bert-base-uncased')
-model = BertForSequenceClassification.from_pretrained('bert-base-uncased', num_labels=2)
-
-# Move the model to the device
-model.to(device)
-
 # Prepare the training data
 print("Preparing training data...")
 #texts = ['Example sentence 1', 'Example sentence 2', ...]
@@ -37,12 +22,30 @@ for question in train_data:
     train_texts.append(question['text'])
     train_labels.append(question['label'])
 print("Text:", len(train_texts), "Labels:", len(train_labels))
+num_labels = pd.Series(train_labels).nunique()
+
+
+# Check if GPU is available
+device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+
+# Define the hyperparameters
+epochs = 5
+batch_size = 32
+learning_rate = 2e-5
+
+# Load the pre-trained tokenizer and model
+tokenizer = BertTokenizer.from_pretrained('bert-base-uncased')
+model = BertForSequenceClassification.from_pretrained('bert-base-uncased', num_labels=num_labels)
+
+# Move the model to the device
+model.to(device)
+
 
 # Tokenize the input texts
 encoded_inputs = tokenizer(train_texts, padding=True, truncation=True, return_tensors='pt')
 
 # Create a TensorDataset
-dataset = TensorDataset(encoded_inputs['input_ids'], encoded_inputs['attention_mask'], torch.tensor(labels))
+dataset = TensorDataset(encoded_inputs['input_ids'], encoded_inputs['attention_mask'], torch.tensor(train_labels))
 
 # Create a DataLoader
 dataloader = DataLoader(dataset, batch_size=batch_size, shuffle=True)
