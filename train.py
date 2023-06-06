@@ -1,6 +1,10 @@
 import torch
+import json
 from transformers import BertTokenizer, BertForSequenceClassification
 from torch.utils.data import TensorDataset, DataLoader
+
+# Check if GPU is available
+device = torch.device('cuda' if torch.cuda.is.available() else 'cpu')
 
 # Define the hyperparameters
 epochs = 5
@@ -11,12 +15,31 @@ learning_rate = 2e-5
 tokenizer = BertTokenizer.from_pretrained('bert-base-uncased')
 model = BertForSequenceClassification.from_pretrained('bert-base-uncased', num_labels=2)
 
+# Move the model to the device
+model.to(device)
+
 # Prepare the training data
-texts = ['Example sentence 1', 'Example sentence 2', ...]
-labels = [0, 1, ...]  # Assuming binary classification with 0 and 1 as labels
+print("Preparing training data..."
+#texts = ['Example sentence 1', 'Example sentence 2', ...]
+#labels = [0, 1, ...]  # Assuming binary classification with 0 and 1 as labels
+# Opening JSON file
+f = open('asdiv_train_test.json')
+
+# returns JSON object as 
+# a dictionary
+data = json.load(f)
+train_data = data['train']
+test_data = data['test']
+
+train_texts = []
+train_labels = []
+for question in train_data:
+    train_texts.append(question['text'])
+    train_labels.append(question['label']
+print("Text:", len(train_texts), "Labels:", len(train_labels))
 
 # Tokenize the input texts
-encoded_inputs = tokenizer(texts, padding=True, truncation=True, return_tensors='pt')
+encoded_inputs = tokenizer(train_texts, padding=True, truncation=True, return_tensors='pt')
 
 # Create a TensorDataset
 dataset = TensorDataset(encoded_inputs['input_ids'], encoded_inputs['attention_mask'], torch.tensor(labels))
@@ -58,5 +81,5 @@ for epoch in range(epochs):
     print(f'Epoch {epoch+1}/{epochs} - Loss: {average_loss}')
 
 # Save the trained model
-model.save_pretrained('path/to/save/model')
-tokenizer.save_pretrained('path/to/save/tokenizer')
+model.save_pretrained('./kc_model/')
+tokenizer.save_pretrained('./kc_tokenizer')
