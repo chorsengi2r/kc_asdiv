@@ -21,7 +21,9 @@ def summarize_results(gt, preds):
             else:
                 correct_dict[gt[i]]=1
     
+    print("Topic counts:")
     print(count_dict)
+    print("Topic correct:")
     print(correct_dict)
     
     return
@@ -191,8 +193,6 @@ for batch in test_dataloader:
             output_file.write(f"Ground Truth: {test_labels[total_examples + i]}, Predicted: {reverse_map[predicted_labels[i].item()]}\n")
             gt_list.append(test_labels[total_examples + i])
             preds_list.append(predicted_labels[i].item())
-            
-        summarize_results(gt_list, preds_list)
         
         # Count correct predictions
         correct_predictions += (predicted_labels == targets).sum().item()
@@ -205,3 +205,5 @@ output_file.close()
 # Calculate accuracy
 accuracy = correct_predictions / total_examples
 print(f'Test Accuracy: {accuracy}')
+
+summarize_results(gt_list, preds_list)
