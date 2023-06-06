@@ -35,7 +35,7 @@ train_texts = []
 train_labels = []
 for question in train_data:
     train_texts.append(question['text'])
-    train_labels.append(question['label']
+    train_labels.append(question['label'])
 print("Text:", len(train_texts), "Labels:", len(train_labels))
 
 # Tokenize the input texts
