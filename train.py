@@ -36,7 +36,7 @@ numerical_labels = [label_map[label] for label in train_labels]
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
 # Define the hyperparameters
-epochs = 20
+epochs = 5
 batch_size = 32
 learning_rate = 2e-5
 
