@@ -52,14 +52,14 @@ labels = torch.tensor(numerical_labels).to(device)
 # Create a TensorDataset for the test data
 test_dataset = TensorDataset(input_ids, attention_mask, labels)
 
+# Set batch size
+batch_size = 32
+
 # Create a DataLoader for the test data
 test_dataloader = DataLoader(test_dataset, batch_size=batch_size, shuffle=False)
 
 # Set the model in evaluation mode
 model.eval()
-
-# Set batch size
-batch_size = 32
 
 # Variables to track accuracy and total examples
 total_examples = 0
