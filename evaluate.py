@@ -66,7 +66,7 @@ total_examples = 0
 correct_predictions = 0
 
 # Create output file for writing predictions
-output_file = open('path/to/output/file.txt', 'w')
+output_file = open('./results.txt', 'w')
 
 # Iterate over the test data
 for batch in test_dataloader:
