@@ -58,6 +58,9 @@ test_dataloader = DataLoader(test_dataset, batch_size=batch_size, shuffle=False)
 # Set the model in evaluation mode
 model.eval()
 
+# Set batch size
+batch_size = 32
+
 # Variables to track accuracy and total examples
 total_examples = 0
 correct_predictions = 0
