@@ -26,7 +26,7 @@ print("Text:", len(train_texts), "Labels:", len(train_labels))
 num_labels = pd.Series(train_labels).nunique()
 
 # Convert string labels to numerical labels
-label_map = {label: i for i, label in enumerate(set(labels))}
+label_map = {label: i for i, label in enumerate(set(train_labels))}
 numerical_labels = [label_map[label] for label in labels]
 
 
