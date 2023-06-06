@@ -36,7 +36,7 @@ reverse_map = dict([(value, key) for key, value in label_map.items()])
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
 # Define the hyperparameters
-epochs = 10
+epochs = 25
 batch_size = 16
 learning_rate = 2e-5
 
