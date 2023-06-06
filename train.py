@@ -25,6 +25,10 @@ for question in train_data:
 print("Text:", len(train_texts), "Labels:", len(train_labels))
 num_labels = pd.Series(train_labels).nunique()
 
+# Convert string labels to numerical labels
+label_map = {label: i for i, label in enumerate(set(labels))}
+numerical_labels = [label_map[label] for label in labels]
+
 
 # Check if GPU is available
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
@@ -45,8 +49,15 @@ model.to(device)
 # Tokenize the input texts
 encoded_inputs = tokenizer(train_texts, padding=True, truncation=True, return_tensors='pt')
 
+# Move the encoded inputs and labels to the device
+input_ids = encoded_inputs['input_ids'].to(device)
+attention_mask = encoded_inputs['attention_mask'].to(device)
+labels = torch.tensor(numerical_labels).to(device)
+
 # Create a TensorDataset
-dataset = TensorDataset(encoded_inputs['input_ids'], encoded_inputs['attention_mask'], torch.tensor(train_labels))
+#dataset = TensorDataset(encoded_inputs['input_ids'], encoded_inputs['attention_mask'], torch.tensor(train_labels))
+dataset = TensorDataset(input_ids, attention_mask, labels)
+
 
 # Create a DataLoader
 dataloader = DataLoader(dataset, batch_size=batch_size, shuffle=True)
