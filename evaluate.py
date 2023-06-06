@@ -33,7 +33,7 @@ numerical_labels = [label_map[label] for label in test_labels]
 
 # Load the pre-trained tokenizer and model
 tokenizer = BertTokenizer.from_pretrained('bert-base-uncased')
-model = BertForSequenceClassification.from_pretrained('bert-base-uncased', num_labels=num_labels)
+model = BertForSequenceClassification.from_pretrained('bert-large-uncased', num_labels=num_labels)
 
 # Move the model to the device
 model.to(device)
