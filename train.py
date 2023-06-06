@@ -31,18 +31,17 @@ print(pd.Series(train_labels).unique())
 label_map = {label: i for i, label in enumerate(set(train_labels))}
 numerical_labels = [label_map[label] for label in train_labels]
 
-
 # Check if GPU is available
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
 # Define the hyperparameters
-epochs = 5
-batch_size = 32
+epochs = 10
+batch_size = 16
 learning_rate = 2e-5
 
 # Load the pre-trained tokenizer and model
-tokenizer = BertTokenizer.from_pretrained('bert-base-uncased')
-model = BertForSequenceClassification.from_pretrained('bert-base-uncased', num_labels=num_labels)
+#tokenizer = BertTokenizer.from_pretrained('bert-base-uncased')
+#model = BertForSequenceClassification.from_pretrained('bert-base-uncased', num_labels=num_labels)
 
 # Move the model to the device
 model.to(device)
