@@ -19,7 +19,7 @@ model = BertForSequenceClassification.from_pretrained('bert-base-uncased', num_l
 model.to(device)
 
 # Prepare the training data
-print("Preparing training data..."
+print("Preparing training data...")
 #texts = ['Example sentence 1', 'Example sentence 2', ...]
 #labels = [0, 1, ...]  # Assuming binary classification with 0 and 1 as labels
 # Opening JSON file
