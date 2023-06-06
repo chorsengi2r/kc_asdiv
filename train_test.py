@@ -4,6 +4,28 @@ import pandas as pd
 from transformers import BertTokenizer, BertForSequenceClassification
 from torch.utils.data import TensorDataset, DataLoader
 
+def summarize_results(gt, preds):
+    
+    count_dict = {}
+    correct_dict = {}
+    
+    for i in range(len(gt)):
+        if gt[i] in count_dict:
+            count_dict[gt[i]]+=1
+        else:
+            count_dict[gt[i]]=1
+            
+        if gt[i] == preds[i]:
+            if gt[i] in correct_dict:
+                correct_dict[gt[i]]+=1
+            else:
+                correct_dict[gt[i]]=1
+    
+    print(count_dict)
+    print(correct_dict)
+    
+    return
+
 # Prepare the training data
 print("Preparing training data...")
 #texts = ['Example sentence 1', 'Example sentence 2', ...]
@@ -143,6 +165,8 @@ model.eval()
 # Variables to track accuracy and total examples
 total_examples = 0
 correct_predictions = 0
+gt_list = []
+preds_list = []
 
 # Create output file for writing predictions
 output_file = open('./results.txt', 'w')
@@ -165,7 +189,11 @@ for batch in test_dataloader:
         # Write ground truth labels and predictions to the output file
         for i in range(len(targets)):
             output_file.write(f"Ground Truth: {test_labels[total_examples + i]}, Predicted: {reverse_map[predicted_labels[i].item()]}\n")
-
+            gt_list.append(test_labels[total_examples + i])
+            preds_list.append(predicted_labels[i].item())
+            
+        summarize_results(gt_list, preds_list)
+        
         # Count correct predictions
         correct_predictions += (predicted_labels == targets).sum().item()
 
